@@ -1,0 +1,22 @@
+version: '3'
+services:
+  uptimekuma:
+    image: louislam/uptime-kuma:1
+    networks:
+      - ksp-proxy
+    ports:
+      - 3001:3001
+    volumes:
+      - uptime-kuma:/app/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+
+networks:
+  ksp-proxy:
+    external: true
+
+volumes:
+  uptime-kuma:

@@ -1,0 +1,7 @@
+httpPort: 4000
+upstream:
+  default:
+    - 8.8.8.8
+customDNS:
+  mapping:
+    add-mapping-here: 1.1.1.1

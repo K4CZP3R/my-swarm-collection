@@ -1,0 +1,15 @@
+version: '3'
+services:
+  rpisysteminfowrapper:
+    #image: ghcr.io/k4czp3r/rpi-system-info
+    image: docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: global
+    command: >
+      sh -c '
+      export PARENT=$$(basename "$$(head /proc/1/cgroup)");
+      export CONT_NAME=rpisi_$$(date +%s);
+      docker run --rm -d -v /var/run/docker.sock:/var/run/docker.sock -e PARENT -e CHILD=$${CONT_NAME} sixsq/wrapper-cleaner:master
+      && docker run --rm --device /dev/i2c-1 --name $${CONT_NAME} ghcr.io/k4czp3r/rpi-system-info'

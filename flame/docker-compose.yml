@@ -1,0 +1,22 @@
+version: '3'
+services:
+  flame:
+    image: pawelmalak/flame:multiarch
+    volumes:
+      - flame-data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 5005:5005
+    networks:
+      - ksp-proxy
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==worker"
+networks:
+  ksp-proxy:
+    external: true
+
+volumes:
+  flame-data:
